@@ -3,12 +3,13 @@ import { mount } from 'enzyme'
 import { windowLocationMock } from '../mocks/mockHelper'
 import SearchResultsContext from 'react-storefront/plp/SearchResultsContext'
 import Drawer from 'react-storefront/drawer/Drawer'
-import { Menu } from '@material-ui/core'
-import * as useMediaQuery from '@material-ui/core/useMediaQuery/useMediaQuery'
+import { Menu } from '@mui/material'
 import Sort from 'react-storefront/plp/Sort'
-import ActionButton from 'react-storefront/ActionButton'
 import SortButton from 'react-storefront/plp/SortButton'
 import { act } from 'react-dom/test-utils'
+import useMediaQuery from '@mui/material/useMediaQuery'
+
+jest.mock('@mui/material/useMediaQuery')
 
 describe('SortButton', () => {
   const sortOptions = [
@@ -17,8 +18,6 @@ describe('SortButton', () => {
     { name: 'Most Popular', code: 'pop' },
     { name: 'Highest Rated', code: 'rating' },
   ]
-
-  const mockMediaQuery = jest.spyOn(useMediaQuery, 'default')
 
   let wrapper,
     title,
@@ -57,7 +56,7 @@ describe('SortButton', () => {
   )
 
   it('should show sort as a drawer when mediaQuery returns true', () => {
-    mockMediaQuery.mockReturnValue(true)
+    useMediaQuery.mockReturnValue(true)
 
     wrapper = mount(<Test />)
 
@@ -66,7 +65,7 @@ describe('SortButton', () => {
   })
 
   it('should show sort as a menu when mediaQuery returns false', () => {
-    mockMediaQuery.mockReturnValue(false)
+    useMediaQuery.mockReturnValue(false)
 
     wrapper = mount(<Test />)
 
@@ -75,26 +74,26 @@ describe('SortButton', () => {
   })
 
   it('should open drawer and mount Sort component on button click', () => {
-    mockMediaQuery.mockReturnValue(true)
+    useMediaQuery.mockReturnValue(true)
     title = 'drawerTest'
 
     wrapper = mount(<Test />)
     expect(wrapper.find(Sort)).not.toExist()
 
-    wrapper.find(ActionButton).simulate('click')
+    wrapper.find('.MuiButton-root').last().simulate('click')
 
     expect(wrapper.find(Sort)).toExist()
     expect(wrapper.find(Drawer).prop('open')).toBe(true)
   })
 
   it('should pass drawerProps and title to drawer and sortProps to Sort', () => {
-    mockMediaQuery.mockReturnValue(true)
+    useMediaQuery.mockReturnValue(true)
     title = 'drawerTestTitle'
     drawerProps = 'drawerTestProps'
     sortProps = 'sortTestProps'
 
     wrapper = mount(<Test />)
-    wrapper.find(ActionButton).simulate('click')
+    wrapper.find('.MuiButton-root').last().simulate('click')
 
     expect(wrapper.find(Drawer).prop('title')).toBe(title)
     expect(wrapper.find(Drawer).prop('testprops')).toBe(drawerProps)
@@ -102,45 +101,45 @@ describe('SortButton', () => {
   })
 
   it('should pass sortProps to Sort when SortButton is used as Menu', () => {
-    mockMediaQuery.mockReturnValue(false)
+    useMediaQuery.mockReturnValue(false)
     sortProps = 'sortTestProps'
 
     wrapper = mount(<Test />)
 
-    wrapper.find(ActionButton).simulate('click')
+    wrapper.find('.MuiButton-root').last().simulate('click')
 
     expect(wrapper.find(Menu)).toExist()
     expect(wrapper.find(Sort).prop('testprops')).toBe(sortProps)
   })
 
   it('should trigger custom onClick function when passed as prop', () => {
-    mockMediaQuery.mockReturnValue(true)
+    useMediaQuery.mockReturnValue(true)
     onClickHandler = jest.fn()
 
     wrapper = mount(<Test />)
 
     expect(onClickHandler).toHaveBeenCalledTimes(0)
-    wrapper.find(ActionButton).simulate('click')
+    wrapper.find('.MuiButton-root').last().simulate('click')
     expect(onClickHandler).toHaveBeenCalledTimes(1)
   })
 
   it('should not open Sort when defaultPrevented', () => {
-    mockMediaQuery.mockReturnValue(true)
+    useMediaQuery.mockReturnValue(true)
     onClickHandler = e => e.preventDefault()
 
     wrapper = mount(<Test />)
 
     expect(wrapper.find(Drawer).prop('open')).toBe(false)
-    wrapper.find(ActionButton).simulate('click')
+    wrapper.find('.MuiButton-root').last().simulate('click')
     expect(wrapper.find(Drawer).prop('open')).toBe(false)
   })
 
   it('should close Drawer', async () => {
-    mockMediaQuery.mockReturnValue(true)
+    useMediaQuery.mockReturnValue(true)
 
     wrapper = mount(<Test />)
 
-    wrapper.find(ActionButton).simulate('click')
+    wrapper.find('.MuiButton-root').last().simulate('click')
     expect(wrapper.find(Drawer).prop('open')).toBe(true)
 
     wrapper.find(Drawer).invoke('onClose')()
@@ -149,11 +148,11 @@ describe('SortButton', () => {
   })
 
   it('should close Menu', async () => {
-    mockMediaQuery.mockReturnValue(false)
+    useMediaQuery.mockReturnValue(false)
 
     wrapper = mount(<Test />)
 
-    wrapper.find(ActionButton).simulate('click')
+    wrapper.find('.MuiButton-root').last().simulate('click')
     expect(wrapper.find(Menu).prop('open')).toBe(true)
 
     await act(async () => {
@@ -166,15 +165,15 @@ describe('SortButton', () => {
 
   it('should show selected sort name', async () => {
     selectedSort = 'rating'
-    mockMediaQuery.mockReturnValue(false)
+    useMediaQuery.mockReturnValue(false)
 
     wrapper = mount(<Test />)
 
-    expect(wrapper.find(ActionButton).prop('value')).toBe('Highest Rated')
+    expect(wrapper.find('.RSFActionButton-value').last().text()).toBe('Highest Rated')
   })
 
   it('should open sort if location have openSort', async () => {
-    mockMediaQuery.mockReturnValue(true)
+    useMediaQuery.mockReturnValue(true)
     windowLocationMock('/', '?openSort=1')
 
     wrapper = mount(<Test />)

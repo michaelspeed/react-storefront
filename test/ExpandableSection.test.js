@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import { mount } from 'enzyme'
 import ExpandableSection from 'react-storefront/ExpandableSection'
-import { ExpansionPanel, ExpansionPanelSummary, Typography } from '@material-ui/core'
-import { ArrowBack as TestIcon, ExpandMore as ExpandMoreIcon } from '@material-ui/icons'
+import { Accordion, AccordionSummary, Typography } from '@mui/material'
+import { ArrowBack as TestIcon, ExpandMore as ExpandMoreIcon } from '@mui/icons-material'
 
 describe('ExpandableSection', () => {
   let wrapper
@@ -73,10 +73,10 @@ describe('ExpandableSection', () => {
 
   it('should set specific styles on margin prop', () => {
     wrapper = mount(<ExpandableSection margins={false} />)
-    expect(wrapper.find(ExpansionPanel).prop('classes').root).not.toContain('margins')
+    expect(wrapper.find(Accordion).prop('classes').root).not.toContain('margins')
 
     wrapper = mount(<ExpandableSection margins={true} />)
-    expect(wrapper.find(ExpansionPanel).prop('classes').root).toContain('margins')
+    expect(wrapper.find(Accordion).prop('classes').root).toContain('margins')
   })
 
   it('should set fixed expanded state when expanded prop provided', () => {
@@ -85,15 +85,13 @@ describe('ExpandableSection', () => {
     expect(wrapper.find(TestIcon).exists()).toBe(true)
     expect(
       wrapper
-        .find(ExpansionPanel)
-        .childAt(0)
+        .find(Accordion)
         .prop('expanded'),
     ).toBe(true)
-    wrapper.find(ExpansionPanelSummary).simulate('click')
+    wrapper.find('.MuiAccordionSummary-root').last().simulate('click')
     expect(
       wrapper
-        .find(ExpansionPanel)
-        .childAt(0)
+        .find(Accordion)
         .prop('expanded'),
     ).toBe(true)
   })
@@ -103,15 +101,13 @@ describe('ExpandableSection', () => {
 
     expect(
       wrapper
-        .find(ExpansionPanel)
-        .childAt(0)
+        .find(Accordion)
         .prop('expanded'),
     ).toBe(false)
-    wrapper.find(ExpansionPanelSummary).simulate('click')
+    wrapper.find('.MuiAccordionSummary-root').last().simulate('click')
     expect(
       wrapper
-        .find(ExpansionPanel)
-        .childAt(0)
+        .find(Accordion)
         .prop('expanded'),
     ).toBe(true)
   })
@@ -136,19 +132,17 @@ describe('ExpandableSection', () => {
     expect(wrapper.find(TestIcon).exists()).toBe(true)
     expect(
       wrapper
-        .find(ExpansionPanel)
-        .childAt(0)
+        .find(Accordion)
         .prop('expanded'),
     ).toBe(true)
 
-    wrapper.find(ExpansionPanelSummary).simulate('click')
+    wrapper.find('.MuiAccordionSummary-root').last().simulate('click')
 
     expect(wrapper.find(ExpandMoreIcon).exists()).toBe(true)
     expect(wrapper.find(TestIcon).exists()).toBe(false)
     expect(
       wrapper
-        .find(ExpansionPanel)
-        .childAt(0)
+        .find(Accordion)
         .prop('expanded'),
     ).toBe(false)
   })
@@ -166,27 +160,25 @@ describe('ExpandableSection', () => {
 
     expect(
       wrapper
-        .find(ExpansionPanel)
-        .childAt(0)
+        .find(Accordion)
         .prop('expanded'),
     ).toBe(false)
 
     wrapper
-      .find(ExpansionPanel)
-      .childAt(0)
+      .find('.RSFExpandableSection-root')
+      .last()
       .simulate('click')
 
     expect(
       wrapper
-        .find(ExpansionPanel)
-        .childAt(0)
+        .find(Accordion)
         .prop('expanded'),
     ).toBe(false)
   })
 
   it('should change expanded state when onChange does not prevent default', () => {
     const Test = () => {
-      const handleChange = (e, expanded) => {}
+      const handleChange = () => {}
 
       return <ExpandableSection onChange={handleChange} />
     }
@@ -195,17 +187,15 @@ describe('ExpandableSection', () => {
 
     expect(
       wrapper
-        .find(ExpansionPanel)
-        .childAt(0)
+        .find(Accordion)
         .prop('expanded'),
     ).toBe(false)
 
-    wrapper.find(ExpansionPanelSummary).simulate('click')
+    wrapper.find('.RSFExpandableSection-summary').last().simulate('click')
 
     expect(
       wrapper
-        .find(ExpansionPanel)
-        .childAt(0)
+        .find(Accordion)
         .prop('expanded'),
     ).toBe(true)
   })

@@ -6,6 +6,7 @@ import Filter from 'react-storefront/plp/Filter'
 import ActionButton from 'react-storefront/ActionButton'
 import Drawer from 'react-storefront/drawer/Drawer'
 import { act } from 'react-dom/test-utils'
+import { getFiberIndex } from '../methods'
 
 describe('FilterButton', () => {
   let wrapper
@@ -48,7 +49,7 @@ describe('FilterButton', () => {
     )
 
     expect(wrapper.find(Filter)).not.toExist()
-    wrapper.find(ActionButton).simulate('click')
+    wrapper.find('.MuiButton-root').at(getFiberIndex(0)).simulate('click')
     expect(wrapper.find(Filter)).toExist()
   })
 
@@ -71,7 +72,7 @@ describe('FilterButton', () => {
       </SearchResultsContext.Provider>,
     )
 
-    wrapper.find(ActionButton).simulate('click')
+    wrapper.find('.MuiButton-root').at(getFiberIndex(0)).simulate('click')
     expect(onClickSpy).toHaveBeenCalled()
   })
 
@@ -96,7 +97,7 @@ describe('FilterButton', () => {
     )
 
     await act(async () => {
-      await wrapper.find(ActionButton).simulate('click')
+      await wrapper.find('.MuiButton-root').at(getFiberIndex(0)).simulate('click')
       await wrapper.update()
       await wrapper.find(Filter).invoke('onViewResultsClick')()
       await wrapper.update()

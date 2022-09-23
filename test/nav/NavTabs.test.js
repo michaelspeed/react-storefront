@@ -2,7 +2,7 @@ import React from 'react'
 import { mount } from 'enzyme'
 import NavTab from 'react-storefront/nav/NavTab'
 import NavTabs from 'react-storefront/nav/NavTabs'
-import { Tabs } from '@material-ui/core'
+import { Tabs } from '@mui/material'
 import { useRouter } from '../mocks/mockRouter'
 
 describe('NavTabs', () => {
@@ -72,7 +72,7 @@ describe('NavTabs', () => {
     const centered = 'centered'
 
     wrapper = mount(
-      <NavTabs scrollButtons="on" classes={{ centered }}>
+      <NavTabs scrollButtons={true} classes={{ centered }}>
         <NavTab id="tab" href="/test" as="/test2" key={1} label="test1" />
         <NavTab id="tab" href="/test2" as="/test" key={2} label="test2" />
       </NavTabs>,

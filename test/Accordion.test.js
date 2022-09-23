@@ -2,7 +2,11 @@ import React from 'react'
 import { mount } from 'enzyme'
 import Accordion from 'react-storefront/Accordion'
 import ExpandableSection from 'react-storefront/ExpandableSection'
-import { ExpansionPanelSummary, ExpansionPanel } from '@material-ui/core'
+import {
+  AccordionSummary as ExpansionPanelSummary,
+  Accordion as ExpansionPanel,
+} from '@mui/material'
+import { getFiberIndex } from './methods'
 
 describe('Accordion', () => {
   it('should be empty render without children', () => {
@@ -44,7 +48,7 @@ describe('Accordion', () => {
 
     it('should expand section on section click ', () => {
       wrapper
-        .find(ExpansionPanelSummary)
+        .find('.MuiButtonBase-root')
         .last()
         .simulate('click')
 
@@ -58,8 +62,8 @@ describe('Accordion', () => {
 
     it('should verify that previous opened section is closed on new section click', () => {
       wrapper
-        .find(ExpansionPanelSummary)
-        .first()
+        .find('.MuiButtonBase-root')
+        .at(getFiberIndex(0))
         .simulate('click')
 
       expect(
@@ -70,7 +74,7 @@ describe('Accordion', () => {
       ).toBe(true)
 
       wrapper
-        .find(ExpansionPanelSummary)
+        .find('.MuiButtonBase-root')
         .last()
         .simulate('click')
 
@@ -95,8 +99,8 @@ describe('Accordion', () => {
 
     it('should close the section if clicked again on the same section', () => {
       wrapper
-        .find(ExpansionPanelSummary)
-        .first()
+        .find('.MuiButtonBase-root')
+        .at(getFiberIndex(0))
         .simulate('click')
       expect(
         wrapper
@@ -106,8 +110,8 @@ describe('Accordion', () => {
       ).toBe(true)
 
       wrapper
-        .find(ExpansionPanelSummary)
-        .first()
+        .find('.MuiButtonBase-root')
+        .at(getFiberIndex(0))
         .simulate('click')
       expect(
         wrapper

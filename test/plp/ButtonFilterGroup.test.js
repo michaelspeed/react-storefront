@@ -4,6 +4,7 @@ import SearchResultsContext from 'react-storefront/plp/SearchResultsContext'
 import ButtonFilterGroup from 'react-storefront/plp/ButtonFilterGroup'
 import SwatchProductOption from 'react-storefront/option/SwatchProductOption'
 import TextProductOption from 'react-storefront/option/TextProductOption'
+import { getFiberIndex } from '../methods'
 
 describe('ButtonFilterGroup', () => {
   let wrapper
@@ -116,11 +117,12 @@ describe('ButtonFilterGroup', () => {
     )
 
     wrapper
-      .find(TextProductOption)
-      .first()
+      .find('.MuiButton-root')
+      .at(getFiberIndex(0))
       .simulate('click')
 
     expect(toggleFilterSpy).toBeCalled()
     expect(toggleFilterSpy).toHaveBeenCalledWith(group1.options[0], undefined)
   })
 })
+ 

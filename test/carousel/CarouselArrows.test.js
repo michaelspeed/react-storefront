@@ -1,7 +1,8 @@
 import React from 'react'
 import { mount } from 'enzyme'
-import { ChevronLeft, ChevronRight } from '@material-ui/icons'
+import { ChevronLeft, ChevronRight } from '@mui/icons-material'
 import CarouselArrows from 'react-storefront/carousel/CarouselArrows'
+import { getFiberIndex } from '../methods'
 
 describe('CarouselArrows', () => {
   let wrapper
@@ -36,7 +37,7 @@ describe('CarouselArrows', () => {
 
     wrapper = mount(<CarouselArrows count={2} selected={0} setSelected={setSelectedMock} />)
 
-    wrapper.find(ChevronRight).simulate('click')
+    wrapper.find('.MuiSvgIcon-root').at(getFiberIndex(0)).simulate('click')
     expect(setSelectedMock).toBeCalledWith(1)
   })
 
@@ -45,7 +46,7 @@ describe('CarouselArrows', () => {
 
     wrapper = mount(<CarouselArrows count={2} selected={1} setSelected={setSelectedMock} />)
 
-    wrapper.find(ChevronLeft).simulate('click')
+    wrapper.find('.MuiSvgIcon-root').at(getFiberIndex(0)).simulate('click')
     expect(setSelectedMock).toBeCalledWith(0)
   })
 })

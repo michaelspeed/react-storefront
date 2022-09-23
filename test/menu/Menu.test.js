@@ -5,8 +5,9 @@ import MenuBack from 'react-storefront/menu/MenuBack'
 import MenuCard from 'react-storefront/menu/MenuCard'
 import MenuFooter from 'react-storefront/menu/MenuFooter'
 import MenuHeader from 'react-storefront/menu/MenuHeader'
-import { ListItem } from '@material-ui/core'
-import { ChevronLeft } from '@material-ui/icons'
+import { ListItem } from '@mui/material'
+import { ChevronLeft } from '@mui/icons-material'
+import { getFiberIndex } from '../methods'
 
 describe('Menu', () => {
   let wrapper
@@ -88,8 +89,8 @@ describe('Menu', () => {
         .prop('card'),
     ).toBe(0)
     wrapper
-      .find(ListItem)
-      .first()
+      .find('.MuiListItem-root')
+      .last()
       .simulate('click')
     expect(
       wrapper
@@ -100,8 +101,8 @@ describe('Menu', () => {
     // Not sure this is actually possible for a user to do, since
     // they are clicking a hidden menu item
     wrapper
-      .find(ListItem)
-      .first()
+      .find('.MuiListItem-root')
+      .last()
       .simulate('click')
   })
 
@@ -163,8 +164,8 @@ describe('Menu', () => {
         .prop('card'),
     ).toBe(0)
     wrapper
-      .find(ListItem)
-      .first()
+      .find('.MuiListItem-root')
+      .last()
       .simulate('click')
     expect(
       wrapper
@@ -173,8 +174,8 @@ describe('Menu', () => {
         .prop('card'),
     ).toBe(1)
     wrapper
-      .find(MenuBack)
-      .first()
+      .find('.MuiButtonBase-root')
+      .last()
       .simulate('click')
     expect(
       wrapper
@@ -245,8 +246,8 @@ describe('Menu', () => {
       />,
     )
     wrapper
-      .find(ListItem)
-      .at(0)
+      .find('.MuiListItem-root')
+      .last()
       .simulate('click')
     expect(wrapper.find(ChevronLeft).length).toBe(1)
   })
@@ -283,8 +284,8 @@ describe('Menu', () => {
       />,
     )
     wrapper
-      .find(ListItem)
-      .at(0)
+      .find('.MuiListItem-root')
+      .last()
       .simulate('click')
     expect(wrapper.find(MenuBack).text()).toBe('Back')
   })

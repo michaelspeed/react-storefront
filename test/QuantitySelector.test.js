@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { mount } from 'enzyme'
 import QuantitySelector from 'react-storefront/QuantitySelector'
-import { IconButton } from '@material-ui/core'
 
 describe('QuantitySelector', () => {
   let wrapper,
@@ -83,8 +82,8 @@ describe('QuantitySelector', () => {
       wrapper = mount(<Test />)
 
       wrapper
-        .find(IconButton)
-        .first()
+        .find('.MuiIconButton-root')
+        .at(3)
         .simulate('click')
 
       expect(getValue).toBe(1)
@@ -95,7 +94,7 @@ describe('QuantitySelector', () => {
       wrapper = mount(<Test />)
 
       wrapper
-        .find(IconButton)
+        .find('.MuiIconButton-root')
         .last()
         .simulate('click')
 
@@ -121,7 +120,7 @@ describe('QuantitySelector', () => {
       wrapper = mount(<Test />)
 
       wrapper
-        .find(IconButton)
+        .find('.MuiIconButton-root')
         .last()
         .simulate('click')
 
@@ -134,7 +133,7 @@ describe('QuantitySelector', () => {
       wrapper = mount(<Test />)
 
       wrapper
-        .find(IconButton)
+        .find('.MuiIconButton-root')
         .last()
         .simulate('click')
 
@@ -147,8 +146,8 @@ describe('QuantitySelector', () => {
       wrapper = mount(<Test />)
 
       wrapper
-        .find(IconButton)
-        .first()
+        .find('.MuiIconButton-root')
+        .at(3)
         .simulate('click')
 
       expect(getValue).toBe(minValue)

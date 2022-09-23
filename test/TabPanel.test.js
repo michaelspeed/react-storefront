@@ -2,7 +2,8 @@
 import React from 'react'
 import { mount } from 'enzyme'
 import TabPanel from 'react-storefront/TabPanel'
-import { Tab } from '@material-ui/core'
+import { Tab } from '@mui/material'
+import { getFiberIndex } from './methods'
 
 describe('TabPanel', () => {
   let wrapper
@@ -88,7 +89,7 @@ describe('TabPanel', () => {
     ).toBe(false)
 
     wrapper
-      .find(Tab)
+      .find('.MuiTab-root')
       .last()
       .simulate('click')
 
@@ -136,7 +137,7 @@ describe('TabPanel', () => {
         .prop('className')
     ).toContain('hidden')
     wrapper
-      .find(Tab)
+      .find('.MuiTab-root')
       .last()
       .simulate('click')
 
@@ -172,7 +173,7 @@ describe('TabPanel', () => {
 
     expect(changed).toBe(false)
     wrapper
-      .find(Tab)
+      .find('.MuiTab-root')
       .last()
       .simulate('click')
 

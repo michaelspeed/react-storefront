@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
 import { mount } from 'enzyme'
-import { Button } from '@material-ui/core'
+import { Button } from '@mui/material'
 import ProductOption from 'react-storefront/option/ProductOption'
 import TextProductOption from 'react-storefront/option/TextProductOption'
 import SwatchProductOption from 'react-storefront/option/SwatchProductOption'
+import { getFiberIndex } from '../methods'
 
 describe('ProductOption', () => {
   let wrapper
@@ -145,12 +146,8 @@ describe('ProductOption', () => {
 
     expect(
       wrapper
-        .find('div')
-        .children()
-        .first()
-        .find('div')
-        .first()
-        .hasClass(/strikeThrough/),
+        .find('.RSFTextProductOption-strikeThrough')
+        .exists()
     ).toEqual(true)
   })
 
